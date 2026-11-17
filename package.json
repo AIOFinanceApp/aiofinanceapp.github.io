@@ -1,0 +1,13 @@
+{
+  "name": "aio-finance-website",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/preview.mjs",
+    "check": "node scripts/check.mjs",
+    "lint": "node scripts/check.mjs",
+    "typecheck": "node scripts/typecheck.mjs"
+  }
+}

@@ -1,0 +1,8 @@
+dist/
+review/
+node_modules/
+*.log
+.DS_Store
+AUDIT.md
+REVIEW.md
+scripts/browser-review.mjs
