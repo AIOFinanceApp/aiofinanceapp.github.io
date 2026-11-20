@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -18,11 +19,15 @@ for(const name of ['icon-64.png','icon-180.png'])fs.copyFileSync(path.join(root,
 const productFiles=['product.css','product.js','themes.js','reports.js'];
 for(const name of productFiles)fs.copyFileSync(path.join(root,'src',name),path.join(out,name));
 fs.cpSync(path.join(root,'src/assets/product'),path.join(out,'assets/product'),{recursive:true});
+const versionedProductFiles=Object.fromEntries(productFiles.map(name => {
+  const hash=createHash('sha256').update(fs.readFileSync(path.join(out,name))).digest('hex').slice(0,16);
+  return [name,name+'?v='+hash];
+}));
 const site='https://aiofinanceapp.github.io/';
 for(const [entry,folder,content,title] of pages){
   const isProduct=entry==='home'||entry==='features';
   const scripts=entry==='home'?['themes.js','product.js']:['reports.js','product.js'];
-  const productAssets=isProduct?'<link rel="stylesheet" href="product.css">'+scripts.map(name=>'<script src="'+name+'" defer></script>').join(''):'';
+  const productAssets=isProduct?'<link rel="stylesheet" href="'+versionedProductFiles['product.css']+'">'+scripts.map(name=>'<script src="'+versionedProductFiles[name]+'" defer></script>').join(''):'';
   const canonical=new URL(folder?folder+'/':'',site).href;
   const target=path.join(out,folder);fs.mkdirSync(target,{recursive:true});
   let html=shell.replace('<!-- PAGE_BASE -->',folder?'<base href="../">':'').replace('<!-- PAGE_TITLE -->',title).replace('<!-- PAGE_ENTRY -->',entry).replace('<!-- PAGE_CONTENT -->',content)
