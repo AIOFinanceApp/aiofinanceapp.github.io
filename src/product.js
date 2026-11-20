@@ -9,7 +9,7 @@ const tools = [
  ['stress','The Stress Test','Explore how a disruption could affect your finances.','Choose a disruption, baseline and projection horizon.','Review modeled income, costs and reserves over time.','Save and report on supported Stress Test scenarios.'],
  ['rental','Rental Analysis','Estimate what a rental might earn after costs and financing.','Purchase price, closing costs, financing, rent, operating costs, and vacancy. Vacancy reduces expected rental income for periods without tenants.','Net operating income, cash flow, and return measures such as cap rate and cash-on-cash return.','Save rental assumptions and generate a Rental Analysis report.']
 ];
-const screens = {home:'Home',budget:'Budget',assets:'Accounts',planning:'Planning'};
+const screens = {home:'Home',budget:'Budget',assets:'Assets',planning:'Planning'};
 function buttons(group, options, onChange) {
  const wrapper = document.getElementById(group);
  const controls = new Map();
@@ -58,37 +58,39 @@ buttons('tools',tools.map(([id,name])=>[id,name]),tool);
 document.querySelector('[data-opportunity]').addEventListener('click',()=>tool('opportunity'));
 tool('opportunity');
 }
-if (document.getElementById('theme-choices')) {
-  const appearances = window.AIO_THEMES;
-  const available = new Set(appearances.implemented.map(([id])=>id));
-  let collection = 'implemented';
-  let theme = 'santorini-dark';
+if (document.getElementById('dark-themes')) {
+  const { dark, light } = window.AIO_THEMES;
+  const names = new Map([...dark, ...light].map(([id, name]) => [id, name]));
+  const defaults = new Set(['dollar-dark', 'dollar-light']);
+  let theme = 'dollar-dark';
   let screen = 'budget';
-  let markTheme;
-  const markCollection = buttons('theme-sets', [['implemented','In the App'],['study','Signature Study']], key => {
-    collection=key;
-    if (!appearances[key].some(([id])=>id===theme)) theme=appearances[key][0][0];
-    buildChoices();
-  });
-  function buildChoices() {
-    document.getElementById('theme-choices').replaceChildren();
-    markTheme = buttons('theme-choices', appearances[collection].map(([id,name,color])=>
-      [id,available.has(id)?name:name+' (Legacy)',color]), key=>{theme=key;showTheme()});
-    markCollection(collection);
-    document.getElementById('theme-collection-note').textContent = collection==='implemented'
-      ? 'Six themes currently selectable in the app.'
-      : 'Earlier Signature study. Midnight Aurora and Coastal Pearl are legacy appearances outside the current selector.';
+
+  function themeOptions(group) {
+    return group.map(([id, name, color]) => [id, defaults.has(id) ? name + ' \u00b7 Default' : name, color]);
+  }
+
+  function selectTheme(key) {
+    theme = key;
     showTheme();
   }
-  const markScreen = buttons('theme-screens', Object.entries(screens), key => {screen=key;showTheme()});
+
+  const markDark = buttons('dark-themes', themeOptions(dark), selectTheme);
+  const markLight = buttons('light-themes', themeOptions(light), selectTheme);
+  const markScreen = buttons('theme-screens', Object.entries(screens), key => {
+    screen = key;
+    showTheme();
+  });
+
   function showTheme() {
-    const [,title] = appearances[collection].find(([id])=>id===theme);
-    markTheme(theme);
+    const title = names.get(theme);
+    markDark(theme);
+    markLight(theme);
     markScreen(screen);
-    document.getElementById('theme-caption').textContent=title+' · '+screens[screen]+(available.has(theme)?'':' · Legacy study appearance');
-    picture('theme-img',theme+'-'+screen,screens[screen]+' screen in '+title);
+    document.getElementById('theme-caption').textContent = title + ' \u00b7 ' + screens[screen];
+    picture('theme-img', theme + '-' + screen, screens[screen] + ' screen in ' + title);
   }
-  buildChoices();
+
+  showTheme();
 }
 const inventory = window.AIO_REPORTS;
 if (inventory) {

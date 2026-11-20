@@ -69,3 +69,21 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
     align-items: flex-start;
   }
 }
+
+.theme-groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.theme-groups .choices {
+  display: grid;
+  justify-content: stretch;
+}
+
+@media (max-width: 400px) {
+  .theme-groups {
+    grid-template-columns: 1fr;
+  }
+}
