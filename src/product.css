@@ -87,3 +87,5 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
     grid-template-columns: 1fr;
   }
 }
+
+.assistant-example{display:grid;justify-items:center;gap:12px;margin:0}.assistant-example figcaption{color:var(--muted);text-align:center;font-size:.875rem}
