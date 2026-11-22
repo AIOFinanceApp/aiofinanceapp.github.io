@@ -89,3 +89,6 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 }
 
 .assistant-example{display:grid;justify-items:center;gap:12px;margin:0}.assistant-example figcaption{color:var(--muted);text-align:center;font-size:.875rem}
+
+.linkedin-link { display: inline-flex; align-items: center; gap: .4em; }
+.linkedin-link svg { flex: none; }

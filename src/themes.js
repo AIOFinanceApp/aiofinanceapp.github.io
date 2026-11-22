@@ -11,8 +11,13 @@ window.AIO_THEMES = {
       "#091524"
     ],
     [
+      "black-copper",
+      "Black Copper",
+      "#100C09"
+    ],
+    [
       "graphite-titanium",
-      "Graphite Titanium",
+      "Graphite",
       "#1B2028"
     ]
   ],
@@ -29,8 +34,13 @@ window.AIO_THEMES = {
     ],
     [
       "ivory-champagne",
-      "Ivory Champagne",
+      "Champagne",
       "#F8F3EA"
+    ],
+    [
+      "lavender-slate",
+      "Lilac Dream",
+      "#F5F2FA"
     ]
   ]
 };
