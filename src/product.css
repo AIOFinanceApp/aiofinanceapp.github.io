@@ -92,3 +92,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 
 .linkedin-link { display: inline-flex; align-items: center; gap: .4em; }
 .linkedin-link svg { flex: none; }
+
+.calendar-artwork{width:min(100%,320px);margin:0 auto;min-width:0}.calendar-artwork img{display:block;width:100%;height:auto;border-radius:12px}
+@media(max-width:850px){#cash-flow .split{grid-template-columns:1fr}}
+@media(max-width:520px){#cash-flow .duo{grid-template-columns:1fr;gap:28px}#cash-flow .duo .phone{transform:none}}
